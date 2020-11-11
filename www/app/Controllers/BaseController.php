@@ -26,7 +26,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+	protected $helpers = ['icons','bootstrap'];
 
 	/**
 	 * Constructor.
@@ -41,6 +41,29 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		// $this->session = \Config\Services::session();
+
+		$this->session = \Config\Services::session();
+		$this->data = [];
+		
+		$this->teamModel =  new \App\Models\TeamModel();
+
+		$this->validation =  \Config\Services::validation();
+
+		//var_dump($this->session->getFlashdata());
+		foreach( $this->session->getFlashdata() as $key => $value)
+		{
+			$this->data[$key] = $value;
+		}
+		$this->data['user'] = $this->session->get('user');
+		$this->data['team'] = $this->session->get('team');
+		if($this->data['user'] !== NULL){
+			
+			$team = $this->teamModel->getWhere(['user_id'=>$this->data['user']['id']])->getFirstRow('array');
+			if($team !== NULL){
+				$this->data['team'] = $team;
+			}
+		}
+		//var_dump($this->data);
 	}
 
 }

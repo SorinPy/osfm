@@ -17,6 +17,7 @@ class Validation
 		\CodeIgniter\Validation\FormatRules::class,
 		\CodeIgniter\Validation\FileRules::class,
 		\CodeIgniter\Validation\CreditCardRules::class,
+		\App\Libraries\CustomValidationRules::class,
 	];
 
 	/**
@@ -33,4 +34,19 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+
+	public $signIn = [
+        'email' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Introdu email-ul folosit la inregistrare.'
+            ]
+        ],
+        'password'    => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Ai nevoie de o parola.'
+            ]
+        ],
+    ];
 }

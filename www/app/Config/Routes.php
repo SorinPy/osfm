@@ -32,6 +32,19 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->group('team', function($routes)
+{
+	$routes->group('([0-9]+)', function($routes)
+    {
+		$routes->add('players' , 'Team::players/$1');
+		$routes->add('/' , 'Team::index/$1');
+	});
+
+	$routes->add('/' , 'Team::index');
+	$routes->add('players' , 'Team::players');
+
+});
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing
